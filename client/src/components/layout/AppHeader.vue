@@ -14,7 +14,7 @@ const toggleMenu = () => {
 </script>
 
 <template>
-    <header class="p-4 bg-blue-700">
+    <header class="p-4 bg-blue-900">
         <div class="container flex justify-between items-center text-white">
             <nav :class="{ 'hidden': !isMenuOpen, 'block': isMenuOpen, 'md:block': true }">
                 <AppNavigation />

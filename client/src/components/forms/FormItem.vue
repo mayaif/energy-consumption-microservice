@@ -29,6 +29,6 @@ const handleSubmit = (e: Event) => {
             </div>
         </div>
 
-        <button type="submit" class="px-4 py-2 mb-1 bg-blue-700 text-white">Add</button>
+        <button type="submit" class="px-4 py-2 mb-1 bg-blue-900 text-white">Add</button>
     </form>
 </template>
