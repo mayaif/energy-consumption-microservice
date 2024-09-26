@@ -1,7 +1,9 @@
 /** @format */
 
 import express from "express";
-import EnergyConsumption from "../models/EnergyConsumption";
+import EnergyConsumption, {
+  IEnergyConsumptionDocument,
+} from "../models/EnergyConsumption";
 
 const router = express.Router();
 
@@ -21,7 +23,11 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const data = await EnergyConsumption.find().sort({ date: 1 });
-    res.json(data);
+    const formattedData = data.map((entry: IEnergyConsumptionDocument) => ({
+      ...entry.toObject(),
+      date: entry.formattedDate,
+    }));
+    res.json(formattedData);
   } catch (error) {
     res.status(500).json({ message: "Error fetching data", error });
   }
