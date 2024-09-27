@@ -4,6 +4,7 @@ import express from "express";
 import EnergyConsumption, {
   IEnergyConsumptionDocument,
 } from "../models/EnergyConsumption";
+import { startOfDay, format } from "date-fns";
 
 const router = express.Router();
 
@@ -11,9 +12,15 @@ const router = express.Router();
 router.post("/", async (req, res) => {
   try {
     const { date, consumption } = req.body;
-    const newEntry = new EnergyConsumption({ date, consumption });
-    await newEntry.save();
-    res.status(201).json(newEntry);
+    const dateStart = startOfDay(new Date(date));
+
+    const updatedEntry = await EnergyConsumption.findOneAndUpdate(
+      { date: dateStart },
+      { date: dateStart, consumption },
+      { new: true, upsert: true, setDefaultsOnInsert: true }
+    );
+
+    res.status(201).json(updatedEntry);
   } catch (error) {
     res.status(400).json({ message: "Error saving data", error });
   }
@@ -24,8 +31,9 @@ router.get("/", async (req, res) => {
   try {
     const data = await EnergyConsumption.find().sort({ date: 1 });
     const formattedData = data.map((entry: IEnergyConsumptionDocument) => ({
-      ...entry.toObject(),
-      date: entry.formattedDate,
+      id: entry._id,
+      date: format(entry.date, "dd/MM/yy"),
+      consumption: entry.consumption,
     }));
     res.json(formattedData);
   } catch (error) {
