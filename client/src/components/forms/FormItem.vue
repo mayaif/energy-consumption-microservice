@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 
 const refs = ref({
-    addDate: 'addDate',
-    addConsumption: 'addConsumption'
+    addDate: '',
+    addConsumption: ''
 })
 
 const emit = defineEmits(['submitData'])
