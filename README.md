@@ -1,7 +1,6 @@
 # Energy Consumption Tracker Microservice
 This repository contains a simple microservice for tracking energy consumption. It is built with a Vue.js 3 frontend, a Node.js & Express backend, and MongoDB for data storage.
 
-Project Structure
 The project is organized into two main folders:
 
 - client: Contains the Vue.js 3 frontend application.
